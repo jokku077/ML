@@ -1,0 +1,35 @@
+import pandas as pd
+from sklearn.tree import DecisionTreeClassifier
+from sklearn.model_selection import train_test_split
+from sklearn.metrics import accuracy_score
+
+dia_data=pd.read_csv(r"C:\Users\jokku\Downloads\diabetes.csv")
+model=DecisionTreeClassifier()
+x_ip=dia_data.drop(columns=['Outcome'])
+y_ip=dia_data['Outcome']
+"""
+x_train, x_test, y_train, y_test = train_test_split(x_ip, y_ip, test_size=0.2)
+
+model.fit(x_train,y_train)
+
+predictions=model.predict(x_test)
+
+score=accuracy_score(y_test,predictions)
+score
+"""
+model.fit(x_ip.values,y_ip.values)  # .values was used with x_ip and y_ip to prevent the error:
+            #UserWarning: X does not have valid feature names, but IsolationForest was fitted with feature name
+
+prg=float(input("no of pregnancies:"))
+glc=float(input("glucose level:"))
+bp=float(input("blood pressure:"))
+st=float(input("skin Thickness:"))
+ins=float(input("Insulin:"))
+bmi=float(input("BMI:"))
+dpf=float(input("Diabatees pedigree function:"))
+age=float(input("age:"))
+prediction=model.predict([[prg,glc,bp,st,ins,bmi,dpf,age]])
+if prediction[0]==1:
+    print("Patient is diabetic")
+else:
+    print("Patient is not diabetic")
